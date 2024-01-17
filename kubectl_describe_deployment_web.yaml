@@ -1,0 +1,35 @@
+Name:                   web
+Namespace:              default
+CreationTimestamp:      Wed, 17 Jan 2024 13:22:34 +0400
+Labels:                 app=web
+Annotations:            deployment.kubernetes.io/revision: 4
+Selector:               app=web
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=web
+  Containers:
+   web:
+    Image:        assistentutopist/web:1.0.0
+    Port:         8000/TCP
+    Host Port:    0/TCP
+    Liveness:     http-get http://:8000/ delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  web-6f864bcf48 (0/0 replicas created), web-5fb5c49558 (0/0 replicas created), web-7f487bc5 (0/0 replicas created)
+NewReplicaSet:   web-6ff8dcb575 (2/2 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  14m   deployment-controller  Scaled up replica set web-6ff8dcb575 to 1
+  Normal  ScalingReplicaSet  13m   deployment-controller  Scaled down replica set web-7f487bc5 to 1 from 2
+  Normal  ScalingReplicaSet  13m   deployment-controller  Scaled up replica set web-6ff8dcb575 to 2 from 1
+  Normal  ScalingReplicaSet  11m   deployment-controller  Scaled down replica set web-7f487bc5 to 0 from 1
